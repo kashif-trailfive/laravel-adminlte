@@ -5,14 +5,14 @@ use Hash;
 use Session;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-class MyAuthController extends Controller
+class UserAuthController extends Controller
 {
     public function index()
     {
         return view('auth.login');
     }  
       
-    public function myLogin(Request $request)
+    public function userLogin(Request $request)
     {
         $request->validate([
             'email' => 'required',
@@ -33,7 +33,7 @@ class MyAuthController extends Controller
         return view('auth.registeration');
     }
       
-    public function myRegistration(Request $request)
+    public function userRegistration(Request $request)
     {  
         $request->validate([
             'name' => 'required',

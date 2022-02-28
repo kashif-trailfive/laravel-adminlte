@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\MyAuthController;
+use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\UserController;
 
 /*
@@ -19,14 +19,28 @@ use App\Http\Controllers\UserController;
 //     return view('home');
 // });
 
-Route::get('/', [MyAuthController::class, 'dashboard']); 
+/**User Login and Authentications 
+ * All user authentication related actions and views, actions could be Ajax or Form GET,PUT, POST and DELETE
+*/
+Route::get('/', [UserAuthController::class, 'dashboard']); 
 
-Route::get('dashboard', [MyAuthController::class, 'dashboard'])->name('dashboard'); 
-Route::get('login', [MyAuthController::class, 'index'])->name('login');
-Route::post('my-login', [MyAuthController::class, 'myLogin'])->name('login.my'); 
-Route::get('registration', [MyAuthController::class, 'registration'])->name('register-user');
-Route::post('my-registration', [MyAuthController::class, 'myRegistration'])->name('register.my'); 
-Route::get('signout', [MyAuthController::class, 'signOut'])->name('signout');
+Route::get('dashboard', [UserAuthController::class, 'dashboard'])->name('dashboard'); 
+Route::get('login', [UserAuthController::class, 'index'])->name('login');
+Route::post('user-login', [UserAuthController::class, 'userLogin'])->name('user.login'); 
+Route::get('registration', [UserAuthController::class, 'registration'])->name('registration');
+Route::post('user-registration', [UserAuthController::class, 'userRegistration'])->name('user.register'); 
+Route::get('signout', [UserAuthController::class, 'signOut'])->name('signout');
 
 
-Route::get('users', [UserController::class, 'indexPaging'])->name('users');
+/**User Table Routes 
+ * All user related actions and views, actions could be Ajax or Form GET,PUT, POST and DELETE
+*/
+Route::get('user-list', [UserController::class, 'index'])->name('users.index');
+Route::get('user-create', [UserController::class, 'create'])->name('user.create');
+Route::get('user-edit/{id}', [UserController::class, 'edit'])->name('user.edit');
+
+Route::post('user/create', [UserController::class, 'userCreate'])->name('user.action.create');
+Route::post('/user/update/{id}', [UserController::class, 'userUpdate'])->name('user.action.update'); 
+
+Route::delete('/user/delete/{id}', [UserController::class, 'userDestroy'])->name('user.action.destroy');
+
